@@ -13,8 +13,8 @@ unsigned char (*createMatrix(const char* buffer))[SIZE_MATRIX] {
 
     int position = 0;
 
-    for (int row = 0; row < SIZE_MATRIX; row++) {
-        for (int col = 0; col < SIZE_MATRIX; col++) {
+    for (int col = 0; col < SIZE_MATRIX; col++) {
+        for (int row = 0; row < SIZE_MATRIX; row++) {
             if (buffer[position] != '\0') {
                 matrix[row][col] = buffer[position];
                 position++;
