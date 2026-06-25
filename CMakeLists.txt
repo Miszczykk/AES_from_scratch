@@ -9,4 +9,6 @@ add_executable(AES_from_scratch main.c
         subBytes.c
         subBytes.h
         shiftRows.c
-        shiftRows.h)
+        shiftRows.h
+        rotWord.c
+        rotWord.h)

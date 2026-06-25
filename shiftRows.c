@@ -8,7 +8,7 @@ void reverse(unsigned char row[SIZE_MATRIX], int left, int right) {
         return;
 
     while (left < right) {
-        unsigned char temp = row[left];
+        const unsigned char temp = row[left];
         row[left] = row[right];
         row[right] = temp;
 
