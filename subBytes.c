@@ -32,3 +32,12 @@ void subBytes(unsigned char matrix[SIZE_MATRIX][SIZE_MATRIX]){
         }
     }
 }
+
+void subWord(unsigned char matrix[SIZE_MATRIX][SIZE_MATRIX]) {
+    if (matrix == NULL)
+        return;
+
+    for (int row = 0; row < SIZE_MATRIX; row++) {
+        matrix[row][SIZE_MATRIX - 1] = s_box[matrix[row][SIZE_MATRIX - 1]];
+    }
+}

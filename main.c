@@ -21,6 +21,10 @@ int main(void) {
         rotWord(key);
         printMatrix(key);
 
+        printf("\nsubWord:\n");
+        subWord(key);
+        printMatrix(key);
+
         while(fgets(buffer, BUFFER_LENGTH, file)) {
             printf("%s\n", buffer);
             unsigned char (*matrix)[4] = createMatrix(buffer);
