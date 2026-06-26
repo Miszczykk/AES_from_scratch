@@ -7,37 +7,31 @@
 
 #define BUFFER_LENGTH 17 // 16 + 1
 #define SOURCE_FILE_PATH "../PublicText.txt"
-#define SECRET_KEY "Ala Ma Kota Psie"
+#define SECRET_KEY "../PublicText.txt"
 
 int main(void) {
     FILE *file = fopen(SOURCE_FILE_PATH, "rb");
     char buffer[BUFFER_LENGTH];
     if (file != NULL) {
-        printf("\nkey:\n");
         unsigned char (*key)[4] = createMatrix(SECRET_KEY);
-        printMatrix(key);
+        printMatrix(key, "key");
 
-        printf("\nrotWord:\n");
         rotWord(key);
-        printMatrix(key);
+        printMatrix(key, "rotWord");
 
-        printf("\nsubWord:\n");
         subWord(key);
-        printMatrix(key);
+        printMatrix(key, "subWord");
 
         while(fgets(buffer, BUFFER_LENGTH, file)) {
-            printf("%s\n", buffer);
             unsigned char (*matrix)[4] = createMatrix(buffer);
 
             if (matrix != NULL) {
-                printMatrix(matrix);
-                    printf("\nsubBytes:\n");
+                printMatrix(matrix, buffer);
                     subBytes(matrix);
-                    printMatrix(matrix);
+                    printMatrix(matrix, "subBytes");
 
-                    printf("\nshiftRows:\n");
                     shiftRows(matrix);
-                    printMatrix(matrix);
+                    printMatrix(matrix, "shiftRows");
                 free(matrix);
             }
             printf("\n");

@@ -26,9 +26,12 @@ unsigned char (*createMatrix(const char* buffer))[SIZE_MATRIX] {
     return matrix;
 }
 
-void printMatrix(unsigned char matrix[SIZE_MATRIX][SIZE_MATRIX]) {
+void printMatrix(unsigned char matrix[SIZE_MATRIX][SIZE_MATRIX], char* title) {
     if (matrix == NULL)
         return;
+
+    printf("\n%s\n", title);
+
     for (int row = 0; row < SIZE_MATRIX; row++) {
         printf("[ ");
         for (int col = 0; col < SIZE_MATRIX; col++) {
