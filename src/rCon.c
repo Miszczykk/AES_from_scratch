@@ -1,4 +1,4 @@
-#include "rCon.h"
+#include "../include/rCon.h"
 #include <stdio.h>
 
 #define SIZE_MATRIX 4

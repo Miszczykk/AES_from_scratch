@@ -1,4 +1,4 @@
-#include "encrypt.h"
+#include "include/encrypt.h"
 
 #define SOURCE_FILE_PATH "../PublicText.txt"
 #define SECRET_KEY "../PublicText.txt"

@@ -1,17 +1,17 @@
-#include "encrypt.h"
+#include "../include/encrypt.h"
 
 #include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "addRoundKey.h"
-#include "keySchedule.h"
-#include "matrix.h"
-#include "mixColumns.h"
-#include "rCon.h"
-#include "rotWord.h"
-#include "shiftRows.h"
-#include "subBytes.h"
+#include "../include/addRoundKey.h"
+#include "../include/keySchedule.h"
+#include "../include/matrix.h"
+#include "../include/mixColumns.h"
+#include "../include/rCon.h"
+#include "../include/rotWord.h"
+#include "../include/shiftRows.h"
+#include "../include/subBytes.h"
 
 #define BUFFER_LENGTH 16
 #define NUMBER_OF_ROUNDS 10

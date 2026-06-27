@@ -1,4 +1,4 @@
-#include "shiftRows.h"
+#include "../include/shiftRows.h"
 #include <stdio.h>
 
 #define SIZE_MATRIX 4

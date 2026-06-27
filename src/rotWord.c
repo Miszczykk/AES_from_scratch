@@ -1,4 +1,4 @@
-#include "rotWord.h"
+#include "../include/rotWord.h"
 #include <stdio.h>
 
 #define SIZE_MATRIX 4

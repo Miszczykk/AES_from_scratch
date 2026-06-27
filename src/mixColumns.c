@@ -1,4 +1,4 @@
-#include "mixColumns.h"
+#include "../include/mixColumns.h"
 
 #include <stdlib.h>
 

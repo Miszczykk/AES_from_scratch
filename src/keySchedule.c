@@ -1,4 +1,4 @@
-#include "keySchedule.h"
+#include "../include/keySchedule.h"
 #include <stddef.h>
 
 #define SIZE_MATRIX 4
