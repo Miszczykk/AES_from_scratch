@@ -5,6 +5,7 @@
 #include "shiftRows.h"
 #include "rotWord.h"
 #include "rCon.h"
+#include "mixColumns.h"
 
 #define BUFFER_LENGTH 17 // 16 + 1
 #define SOURCE_FILE_PATH "../PublicText.txt"
@@ -32,11 +33,14 @@ int main(void) {
 
             if (matrix != NULL) {
                 printMatrix(matrix, buffer);
-                    subBytes(matrix);
-                    printMatrix(matrix, "subBytes");
+                subBytes(matrix);
+                printMatrix(matrix, "subBytes");
 
-                    shiftRows(matrix);
-                    printMatrix(matrix, "shiftRows");
+                shiftRows(matrix);
+                printMatrix(matrix, "shiftRows");
+
+                matrix = mixColumns(matrix);
+                printMatrix(matrix, "mixColumns");
                 free(matrix);
             }
             printf("\n");

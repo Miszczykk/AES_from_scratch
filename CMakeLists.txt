@@ -13,4 +13,6 @@ add_executable(AES_from_scratch main.c
         rotWord.c
         rotWord.h
         rCon.h
-        rCon.c)
+        rCon.c
+        mixColumns.c
+        mixColumns.h)
