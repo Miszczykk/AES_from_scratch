@@ -28,19 +28,19 @@ void mixColumns(unsigned char matrix[SIZE_MATRIX][SIZE_MATRIX]) {
     if (matrix == NULL)
         return;
 
-    unsigned char newMatrix[SIZE_MATRIX][SIZE_MATRIX] = {0};
+    unsigned char new_matrix[SIZE_MATRIX][SIZE_MATRIX] = {0};
 
     for (int row = 0; row < SIZE_MATRIX; row++) {
         for (int col = 0; col < SIZE_MATRIX; col++) {
             for (int index = 0; index < SIZE_MATRIX; index++) {
-                newMatrix[row][col] ^= galoisFieldMultiplication(state_matrix[row][index], matrix[index][col]);
+                new_matrix[row][col] ^= galoisFieldMultiplication(state_matrix[row][index], matrix[index][col]);
             }
         }
     }
 
     for (int row = 0; row < SIZE_MATRIX; row++) {
         for (int col = 0; col < SIZE_MATRIX; col++) {
-            matrix[row][col] = newMatrix[row][col];
+            matrix[row][col] = new_matrix[row][col];
         }
     }
 }

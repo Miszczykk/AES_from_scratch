@@ -6,6 +6,7 @@
 #include "rotWord.h"
 #include "rCon.h"
 #include "mixColumns.h"
+#include "keySchedule.h"
 
 #define BUFFER_LENGTH 17 // 16 + 1
 #define SOURCE_FILE_PATH "../PublicText.txt"
@@ -27,12 +28,14 @@ int main(void) {
         rCon(key, 0);
         printMatrix(key, "rCon for 0 round");
 
-
+        keySchedule(key);
+        printMatrix(key, "keySchedule");
         while(fgets(buffer, BUFFER_LENGTH, file)) {
             unsigned char (*matrix)[4] = createMatrix(buffer);
 
             if (matrix != NULL) {
                 printMatrix(matrix, buffer);
+
                 subBytes(matrix);
                 printMatrix(matrix, "subBytes");
 
@@ -41,9 +44,9 @@ int main(void) {
 
                 mixColumns(matrix);
                 printMatrix(matrix, "mixColumns");
+
                 free(matrix);
             }
-            printf("\n");
         }
         free(key);
         fclose(file);

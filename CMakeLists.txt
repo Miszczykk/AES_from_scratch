@@ -15,4 +15,6 @@ add_executable(AES_from_scratch main.c
         rCon.h
         rCon.c
         mixColumns.c
-        mixColumns.h)
+        mixColumns.h
+        keySchedule.c
+        keySchedule.h)
