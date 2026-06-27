@@ -19,4 +19,6 @@ add_executable(AES_from_scratch main.c
         keySchedule.c
         keySchedule.h
         addRoundKey.c
-        addRoundKey.h)
+        addRoundKey.h
+        encrypt.c
+        encrypt.h)

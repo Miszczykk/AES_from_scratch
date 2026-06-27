@@ -40,3 +40,14 @@ void printMatrix(unsigned char matrix[SIZE_MATRIX][SIZE_MATRIX], char* title) {
         printf("]\n");
     }
 }
+
+void copyMatrix(unsigned char copy_matrix[SIZE_MATRIX][SIZE_MATRIX], unsigned char original_matrix[SIZE_MATRIX][SIZE_MATRIX]) {
+    if (copy_matrix == NULL || original_matrix == NULL)
+        return;
+
+    for (int row = 0; row < SIZE_MATRIX; row++) {
+        for (int col = 0; col < SIZE_MATRIX; col++) {
+            copy_matrix[row][col] = original_matrix[row][col];
+        }
+    }
+}
