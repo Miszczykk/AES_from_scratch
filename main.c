@@ -39,7 +39,7 @@ int main(void) {
                 shiftRows(matrix);
                 printMatrix(matrix, "shiftRows");
 
-                matrix = mixColumns(matrix);
+                mixColumns(matrix);
                 printMatrix(matrix, "mixColumns");
                 free(matrix);
             }

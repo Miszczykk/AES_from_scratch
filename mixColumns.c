@@ -24,11 +24,11 @@ unsigned char galoisFieldMultiplication(unsigned char a, unsigned char b) {
     }
 }
 
-unsigned char (*mixColumns(unsigned char matrix[SIZE_MATRIX][SIZE_MATRIX]))[SIZE_MATRIX] {
-    unsigned char (*newMatrix)[SIZE_MATRIX] = calloc(SIZE_MATRIX * SIZE_MATRIX,  sizeof(unsigned char));
+void mixColumns(unsigned char matrix[SIZE_MATRIX][SIZE_MATRIX]) {
+    if (matrix == NULL)
+        return;
 
-    if (newMatrix == NULL)
-        return NULL;
+    unsigned char newMatrix[SIZE_MATRIX][SIZE_MATRIX] = {0};
 
     for (int row = 0; row < SIZE_MATRIX; row++) {
         for (int col = 0; col < SIZE_MATRIX; col++) {
@@ -38,5 +38,9 @@ unsigned char (*mixColumns(unsigned char matrix[SIZE_MATRIX][SIZE_MATRIX]))[SIZE
         }
     }
 
-    return newMatrix;
+    for (int row = 0; row < SIZE_MATRIX; row++) {
+        for (int col = 0; col < SIZE_MATRIX; col++) {
+            matrix[row][col] = newMatrix[row][col];
+        }
+    }
 }
