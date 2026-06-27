@@ -4,6 +4,7 @@
 #include "subBytes.h"
 #include "shiftRows.h"
 #include "rotWord.h"
+#include "rCon.h"
 
 #define BUFFER_LENGTH 17 // 16 + 1
 #define SOURCE_FILE_PATH "../PublicText.txt"
@@ -21,6 +22,10 @@ int main(void) {
 
         subWord(key);
         printMatrix(key, "subWord");
+
+        rCon(key, 0);
+        printMatrix(key, "rCon for 0 round");
+
 
         while(fgets(buffer, BUFFER_LENGTH, file)) {
             unsigned char (*matrix)[4] = createMatrix(buffer);
