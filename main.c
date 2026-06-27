@@ -7,6 +7,7 @@
 #include "rCon.h"
 #include "mixColumns.h"
 #include "keySchedule.h"
+#include "addRoundKey.h"
 
 #define BUFFER_LENGTH 17 // 16 + 1
 #define SOURCE_FILE_PATH "../PublicText.txt"
@@ -30,11 +31,15 @@ int main(void) {
 
         keySchedule(key);
         printMatrix(key, "keySchedule");
+
         while(fgets(buffer, BUFFER_LENGTH, file)) {
             unsigned char (*matrix)[4] = createMatrix(buffer);
 
             if (matrix != NULL) {
                 printMatrix(matrix, buffer);
+
+                addRoundKey(matrix, key);
+                printMatrix(matrix, "addRoundKey");
 
                 subBytes(matrix);
                 printMatrix(matrix, "subBytes");

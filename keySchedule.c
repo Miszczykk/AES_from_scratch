@@ -1,8 +1,12 @@
 #include "keySchedule.h"
+#include <stddef.h>
 
 #define SIZE_MATRIX 4
 
 void keySchedule(unsigned char matrix[SIZE_MATRIX][SIZE_MATRIX]) {
+    if (matrix == NULL)
+        return;
+
     unsigned char old_matrix[SIZE_MATRIX][SIZE_MATRIX];
 
     for (int row = 0; row < SIZE_MATRIX; row++) {
