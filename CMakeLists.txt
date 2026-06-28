@@ -21,4 +21,6 @@ add_executable(AES_from_scratch main.c
         src/addRoundKey.c
         include/addRoundKey.h
         src/encrypt.c
-        include/encrypt.h)
+        include/encrypt.h
+        src/decryption.c
+        include/decryption.h)
