@@ -21,7 +21,7 @@ void encrypt(const char* source_file_path, const char* secret_key) {
         return;
 
     unsigned char (*keys[NUMBER_OF_ROUNDS + 1])[4];
-    keys[0] = createMatrix(secret_key);
+    keys[0] = createMatrix(secret_key, BUFFER_LENGTH);
 
     for (int round = 1; round <= NUMBER_OF_ROUNDS; round++) {
         keys[round] = malloc(SIZE_MATRIX * SIZE_MATRIX * sizeof(unsigned char));
@@ -34,7 +34,7 @@ void encrypt(const char* source_file_path, const char* secret_key) {
         rotWord(keys[round]);
         subWord(keys[round]);
         rCon(keys[round], round-1);
-        keySchedule(keys[round]);
+        keySchedule(keys[round], keys[round-1]);
     }
 
     FILE *file = fopen(source_file_path, "rb");
@@ -42,7 +42,7 @@ void encrypt(const char* source_file_path, const char* secret_key) {
     if (file != NULL) {
         size_t bytes_read;
         while ((bytes_read = fread(buffer, sizeof(unsigned char), BUFFER_LENGTH, file)) > 0) {
-            unsigned char (*matrix)[4] = createMatrix(buffer);
+            unsigned char (*matrix)[4] = createMatrix(buffer, bytes_read);
             if (matrix == NULL)
                 break;
 
@@ -58,6 +58,8 @@ void encrypt(const char* source_file_path, const char* secret_key) {
             subBytes(matrix);
             shiftRows(matrix);
             addRoundKey(matrix, keys[10]);
+
+            printMatrix(matrix, "../PrivateText.txt");
 
             free(matrix);
         }

@@ -4,7 +4,7 @@
 
 #define SIZE_MATRIX 4
 
-unsigned char (*createMatrix(const char* buffer))[SIZE_MATRIX] {
+unsigned char (*createMatrix(const char* buffer, size_t bytes_read))[SIZE_MATRIX] {
     //row x col
     unsigned char (*matrix)[SIZE_MATRIX] = malloc(SIZE_MATRIX * SIZE_MATRIX * sizeof(unsigned char));
 
@@ -15,7 +15,7 @@ unsigned char (*createMatrix(const char* buffer))[SIZE_MATRIX] {
 
     for (int col = 0; col < SIZE_MATRIX; col++) {
         for (int row = 0; row < SIZE_MATRIX; row++) {
-            if (buffer[position] != '\0') {
+            if (position < bytes_read) {
                 matrix[row][col] = buffer[position];
                 position++;
             }else {
@@ -26,19 +26,33 @@ unsigned char (*createMatrix(const char* buffer))[SIZE_MATRIX] {
     return matrix;
 }
 
-void printMatrix(unsigned char matrix[SIZE_MATRIX][SIZE_MATRIX], char* title) {
+void printMatrix(unsigned char matrix[SIZE_MATRIX][SIZE_MATRIX], const char* source_to_file) {
     if (matrix == NULL)
         return;
 
-    printf("\n%s\n", title);
+    char *string = malloc((SIZE_MATRIX * SIZE_MATRIX + 1) * sizeof(char));
 
-    for (int row = 0; row < SIZE_MATRIX; row++) {
-        printf("[ ");
-        for (int col = 0; col < SIZE_MATRIX; col++) {
-            printf("%02X ", matrix[row][col]);
-        }
-        printf("]\n");
+    if (string == NULL) {
+        free(string);
+        return;
     }
+    int index = 0;
+
+    for (int col = 0; col < SIZE_MATRIX; col++) {
+        for (int row = 0; row < SIZE_MATRIX; row++) {
+            printf("%02x", matrix[row][col]);
+            string[index] = (char)matrix[row][col];
+            index++;
+        }
+    }
+    string[index] = '\0';
+
+    FILE *file = fopen(source_to_file, "a");
+    if (file != NULL) {
+        fprintf(file, string);
+    }
+    fclose(file);
+    free(string);
 }
 
 void copyMatrix(unsigned char copy_matrix[SIZE_MATRIX][SIZE_MATRIX], unsigned char original_matrix[SIZE_MATRIX][SIZE_MATRIX]) {
