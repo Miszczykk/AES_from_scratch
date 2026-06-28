@@ -25,3 +25,16 @@ void shiftRows(unsigned char matrix[SIZE_MATRIX][SIZE_MATRIX]) {
         reverse(matrix[row], 0, SIZE_MATRIX-1);
     }
 }
+
+void inverseShiftRows(unsigned char matrix[SIZE_MATRIX][SIZE_MATRIX]) {
+    if (matrix == NULL)
+        return;
+
+    for (int row = 1; row < SIZE_MATRIX; row++) {
+        int shift = SIZE_MATRIX  - row;
+
+        reverse(matrix[row], 0, shift-1);
+        reverse(matrix[row], shift, SIZE_MATRIX-1);
+        reverse(matrix[row], 0, SIZE_MATRIX-1);
+    }
+}
