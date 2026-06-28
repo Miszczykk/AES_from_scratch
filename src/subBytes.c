@@ -1,6 +1,9 @@
 #include "../include/subBytes.h"
+
 #include <stdio.h>
+
 #define SIZE_MATRIX 4
+
 //16*16 = 265
 unsigned char s_box[256] = {
     // 0     1     2     3     4     5     6     7     8     9     A     B     C     D     E     F

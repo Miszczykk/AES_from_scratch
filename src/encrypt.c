@@ -1,8 +1,8 @@
 #include "../include/encrypt.h"
 
 #include <stddef.h>
-#include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "../include/addRoundKey.h"
 #include "../include/keySchedule.h"
@@ -16,9 +16,18 @@
 #define BUFFER_LENGTH 16
 #define NUMBER_OF_ROUNDS 10
 
-void encrypt(const char* source_file_path, const char* secret_key) {
-    if (source_file_path == NULL || secret_key == NULL)
-        return;
+char* encrypt(const char* text, const char* secret_key) {
+    if (text == NULL || secret_key == NULL)
+        return NULL;
+
+    const size_t text_length = strlen(text);
+    size_t num_blocks = (text_length / BUFFER_LENGTH) + (text_length % BUFFER_LENGTH != 0 ? 1 : 0);
+    if (num_blocks == 0) num_blocks = 1;
+
+    const size_t total_encrypted_length = num_blocks * BUFFER_LENGTH;
+    char* encrypted_text = malloc((total_encrypted_length + 1) * sizeof(char));
+    if (encrypted_text == NULL)
+        return NULL;
 
     unsigned char (*keys[NUMBER_OF_ROUNDS + 1])[4];
     keys[0] = createMatrix(secret_key, BUFFER_LENGTH);
@@ -27,7 +36,8 @@ void encrypt(const char* source_file_path, const char* secret_key) {
         keys[round] = malloc(SIZE_MATRIX * SIZE_MATRIX * sizeof(unsigned char));
         if (keys[round] == NULL) {
             for (int i = 0; i < round; i++) free(keys[i]);
-            return;
+            free(encrypted_text);
+            return NULL;
         }
 
         copyMatrix(keys[round], keys[round-1]);
@@ -37,37 +47,48 @@ void encrypt(const char* source_file_path, const char* secret_key) {
         keySchedule(keys[round], keys[round-1]);
     }
 
-    FILE *file = fopen(source_file_path, "rb");
-    char buffer[BUFFER_LENGTH];
-    if (file != NULL) {
-        size_t bytes_read;
-        while ((bytes_read = fread(buffer, sizeof(unsigned char), BUFFER_LENGTH, file)) > 0) {
-            unsigned char (*matrix)[4] = createMatrix(buffer, bytes_read);
-            if (matrix == NULL)
-                break;
+    char buffer[BUFFER_LENGTH + 1];
+    int current_offset = 0;
 
-            addRoundKey(matrix, keys[0]);
+    for (int length_string = 0; length_string < strlen(text); length_string+=BUFFER_LENGTH) {
+        const size_t remaining_bytes = text_length - length_string;
+        const size_t bytes_to_copy = remaining_bytes < BUFFER_LENGTH ? remaining_bytes : BUFFER_LENGTH;
 
-            for (int round = 1; round < NUMBER_OF_ROUNDS; round++) {
-                subBytes(matrix);
-                shiftRows(matrix);
-                mixColumns(matrix);
-                addRoundKey(matrix, keys[round]);
-            }
+        memset(buffer, 0, BUFFER_LENGTH + 1);
+        strncpy(buffer, text + length_string, bytes_to_copy);
 
+        unsigned char (*matrix)[4] = createMatrix(buffer, BUFFER_LENGTH);
+        if (matrix == NULL)
+            break;
+
+        addRoundKey(matrix, keys[0]);
+        for (int round = 1; round < NUMBER_OF_ROUNDS; round++) {
             subBytes(matrix);
             shiftRows(matrix);
-            addRoundKey(matrix, keys[10]);
-
-            printMatrix(matrix, "../PrivateText.txt");
-
-            free(matrix);
+            mixColumns(matrix);
+            addRoundKey(matrix, keys[round]);
         }
-        fclose(file);
+
+        subBytes(matrix);
+        shiftRows(matrix);
+        addRoundKey(matrix, keys[10]);
+
+        char* chunk_string = printMatrix(matrix);
+        if (chunk_string != NULL) {
+            memcpy(encrypted_text + current_offset, chunk_string, BUFFER_LENGTH);
+            current_offset += BUFFER_LENGTH;
+
+            free(chunk_string);
+        }
+
+        free(matrix);
     }
+    encrypted_text[total_encrypted_length] = '\0';
 
     for (int round = 0; round <= NUMBER_OF_ROUNDS; round++) {
         free(keys[round]);
         keys[round] = NULL;
     }
+
+    return encrypted_text;
 }
