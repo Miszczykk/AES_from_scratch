@@ -16,12 +16,11 @@
 #define BUFFER_LENGTH 16
 #define NUMBER_OF_ROUNDS 10
 
-char* decryption(const char* secret_text, const char* secret_key) {
-    if (secret_text == NULL || secret_key == NULL)
+char* decryption(const char* secret_text, const int secret_length, const char* secret_key) {
+    if (secret_text == NULL || secret_key == NULL || secret_length == 0)
         return NULL;
 
-    const size_t text_length = strlen(secret_text);
-    size_t num_blocks = (text_length / BUFFER_LENGTH) + (text_length % BUFFER_LENGTH != 0 ? 1 : 0);
+    size_t num_blocks = (secret_length / BUFFER_LENGTH) + (secret_length % BUFFER_LENGTH != 0 ? 1 : 0);
     if (num_blocks == 0) num_blocks = 1;
 
     const size_t total_decrypted_length = num_blocks * BUFFER_LENGTH;
@@ -50,12 +49,12 @@ char* decryption(const char* secret_text, const char* secret_key) {
     char buffer[BUFFER_LENGTH + 1];
     int current_offset = 0;
 
-    for (int length_string = 0; length_string < strlen(secret_text); length_string+=BUFFER_LENGTH) {
-        const size_t remaining_bytes = text_length - length_string;
+    for (int length_string = 0; length_string < secret_length; length_string+=BUFFER_LENGTH) {
+        const size_t remaining_bytes = secret_length - length_string;
         const size_t bytes_to_copy = remaining_bytes < BUFFER_LENGTH ? remaining_bytes : BUFFER_LENGTH;
 
         memset(buffer, 0, BUFFER_LENGTH + 1);
-        strncpy(buffer, secret_text + length_string, bytes_to_copy);
+        memcpy(buffer, secret_text + length_string, bytes_to_copy);
 
         unsigned char (*matrix)[4] = createMatrix(buffer, BUFFER_LENGTH);
         if (matrix == NULL)
