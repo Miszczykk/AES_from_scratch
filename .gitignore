@@ -1,3 +1,9 @@
 PublicText.txt
 PrivateText.txt
 .idea/*
+__pycache__/
+*.so
+*.dll
+*.exe
+build/
+*.csv

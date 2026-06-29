@@ -4,21 +4,21 @@
 
 #define SIZE_MATRIX 4
 
-unsigned char state_matrix[SIZE_MATRIX][SIZE_MATRIX] = {
+static unsigned char state_matrix[SIZE_MATRIX][SIZE_MATRIX] = {
     {0x02, 0x03, 0x01, 0x01},
     {0x01, 0x02, 0x03, 0x01},
     {0x01, 0x01, 0x02, 0x03},
     {0x03, 0x01, 0x01, 0x02},
 };
 
-unsigned char inverse_state_matrix[SIZE_MATRIX][SIZE_MATRIX] = {
+static unsigned char inverse_state_matrix[SIZE_MATRIX][SIZE_MATRIX] = {
     {0x0E, 0x0B, 0x0D, 0x09},
     {0x09, 0x0E, 0x0B, 0x0D},
     {0x0D, 0x09, 0x0E, 0x0B},
     {0x0B, 0x0D, 0x09, 0x0E}
 };
 
-unsigned char galoisFieldMultiplication(unsigned char a, unsigned char b) {
+static unsigned char galoisFieldMultiplication(unsigned char a, unsigned char b) {
     unsigned char result = 0;
 
     for (int bit = 0; bit < 8; bit++) {

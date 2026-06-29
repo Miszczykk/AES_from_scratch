@@ -4,7 +4,7 @@
 
 #define SIZE_MATRIX 4
 
-void reverse(unsigned char row[SIZE_MATRIX], int left, int right) {
+static void reverse(unsigned char row[SIZE_MATRIX], int left, int right) {
     while (left < right) {
         const unsigned char temp = row[left];
         row[left] = row[right];

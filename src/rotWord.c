@@ -5,8 +5,7 @@
 #define SIZE_MATRIX 4
 #define LAST_COL (SIZE_MATRIX-1)
 
-void reverseCol(unsigned char matrix[SIZE_MATRIX][SIZE_MATRIX], int top, int bottom) {
-
+static void reverseCol(unsigned char matrix[SIZE_MATRIX][SIZE_MATRIX], int top, int bottom) {
     while (top < bottom) {
         const unsigned char temp = matrix[top][LAST_COL];
         matrix[top][LAST_COL] = matrix[bottom][LAST_COL];
@@ -15,7 +14,6 @@ void reverseCol(unsigned char matrix[SIZE_MATRIX][SIZE_MATRIX], int top, int bot
         top++;
         bottom--;
     }
-
 }
 
 void rotWord(unsigned char matrix[SIZE_MATRIX][SIZE_MATRIX]) {

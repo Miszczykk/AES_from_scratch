@@ -24,3 +24,27 @@ add_executable(AES_from_scratch main.c
         include/encrypt.h
         src/decryption.c
         include/decryption.h)
+
+set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
+
+add_library(aes_lib SHARED
+        src/matrix.c
+        include/matrix.h
+        src/subBytes.c
+        include/subBytes.h
+        src/shiftRows.c
+        include/shiftRows.h
+        src/rotWord.c
+        include/rotWord.h
+        include/rCon.h
+        src/rCon.c
+        src/mixColumns.c
+        include/mixColumns.h
+        src/keySchedule.c
+        include/keySchedule.h
+        src/addRoundKey.c
+        include/addRoundKey.h
+        src/encrypt.c
+        include/encrypt.h
+        src/decryption.c
+        include/decryption.h)
