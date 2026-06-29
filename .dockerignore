@@ -1,0 +1,8 @@
+build/
+cmake-build-debug/
+.venv/
+.git/
+.vscode/
+.idea/
+__pycache__/
+*.csv
